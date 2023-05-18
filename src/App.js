@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 import Login from './components/login.component'
 import SignUp from './components/signup.component'
-
+import Resource from './components/resource.component'
+import Logout from './components/logout.component'
 function App() {
   return (
     <Router>
@@ -27,6 +28,16 @@ function App() {
                     Sign up
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/students'}>
+                    Students
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/logout'}>
+                    Logout
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -38,6 +49,8 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/students" element={<Resource />} />
+              <Route path="/logout" element={<Logout />} />
             </Routes>
           </div>
         </div>

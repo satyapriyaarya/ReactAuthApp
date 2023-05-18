@@ -1,52 +1,64 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { useState } from "react";
+import axios from 'axios';
 
-export default class SignUp extends Component {
-  render() {
-    return (
-      <form>
-        <h3>Sign Up</h3>
+const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
 
-        <div className="mb-3">
-          <label>First name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="First name"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Last name</label>
-          <input type="text" className="form-control" placeholder="Last name" />
-        </div>
-
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-          />
-        </div>
-
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
-        </div>
-        <p className="forgot-password text-right">
-          Already registered <a href="/sign-in">sign in?</a>
-        </p>
-      </form>
-    )
+  const handleRegister = async () => {
+    const response = await axios.post('http://localhost:3000/users', {
+                              username,
+                              password
+                            })
+                            .then(resp => {
+                              setMsg("Registration successfully.");
+                            })
+                            .catch(error => {
+                              setMsg("Unable to register user.");
+                            });
   }
+
+  return (
+    <>
+      <h3>Sign Up</h3>
+      <div className="mb-3">
+        <label>User name</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter email"
+          value={username}
+          onChange={e=>setUsername(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>Password</label>
+        <input
+          type="password"
+          className="form-control"
+          placeholder="Enter password"
+          value={password}
+          onChange={e=>setPassword(e.target.value)}
+        />
+      </div>
+
+      <div className="d-grid">
+        <button onClick={handleRegister} className="btn btn-primary">
+          Sign Up
+        </button>
+      </div>
+
+      <div className="mb-3">
+        <label>{msg}</label>
+      </div>
+
+      <p className="forgot-password text-right">
+        Already registered <a href="/sign-in">sign in?</a>
+      </p>
+    </>
+  )
 }
+export default SignUp;
